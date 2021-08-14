@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="button.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
+  </head>
+  <style>
+
+        .ext__popup_container {
+            height: 500px;
+            width: 300px; 
+            background: #4b6cb7;  
+            background: -webkit-linear-gradient(to right, #182848, #4b6cb7);
+            background: linear-gradient(to right, #182848, #4b6cb7); 
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            font-family: 'Poppins', sans-serif !important;
+        }
+        .ext__logo_area {
+            color: aliceblue;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 24px;
+            padding: 0px;
+        }
+
+        .ext__form{
+            width: 100%;
+        }
+
+        .ext__form_group{
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .ext_form_control_label{
+            color: aliceblue;
+            font-size: 16px;
+        }
+        .ext__form_control{
+            width: 290px;
+            border: 1px solid aliceblue;
+            outline: none;
+            margin-top: 10px;
+            padding: 10px 5px;
+            color: #4b6cb7;
+            font-size: 16px;
+            border-radius: 3px;
+        }
+
+        button {
+        padding: 10px 20px;
+        font-size: 16px;
+        outline: none;
+        border: none;
+        border-radius: 3px;
+        color: #4b6cb7;
+        }
+
+        button.current {
+        box-shadow: 0 0 0 2px white,
+                    0 0 0 4px black;
+        }   
+        
+        .ext__timer{
+            color: #4b6cb7;
+            margin-top: 40px;
+            background-color: aliceblue;
+            padding: 10px;
+            text-align: center;
+            border-radius: 3px;
+        }
+        .ext__timer_left_label{
+            color: aliceblue;
+            margin-top: 10px;
+            padding: 0px;
+            font-size: 18px;
+        }
+
+        .ext__error_msg{
+            padding: 7px 10px;
+            background-color: brown;
+            color: aliceblue;
+            font-size: 14px;
+            border-radius: 3px;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+  </style>
+  <body class="ext__popup_container">
+
+    <div class="ext__logo_area">
+        <h1>DEEP SLEEP</h1>
+    </div>
+
+    <div class="ext__error_msg" id="ext__error_msg"></div>
+
+    <div class="ext__form">
+        <div class="ext__form_group">
+            <label for="sleeping_time" class="ext_form_control_label">When you wanna go bed ?</label>
+            <input type="time" id="ext_time_input" class="ext__form_control" required>
+        </div>
+
+        <div class="ext__form_group">
+            <button id="ext_set_time">SET TIME</button>
+        </div> 
+        
+
+    </div>
+
+    <div class="ext__timer">
+        <h1 id="ext__secound_left"></h1>
+    </div>
+
+    <p class="ext__timer_left_label">Seconds left</p>
+
+    <script src="./popup.js"></script>
+  </body>
+</html>
