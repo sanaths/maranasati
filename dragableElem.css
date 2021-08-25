@@ -1,0 +1,20 @@
+.ext__dragable_main_container{
+    width: 250px;
+    height: 80px;
+    max-height: 80px;
+    background-color: teal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    text-align: center;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+
+.timer_area{
+        color: aliceblue;
+        padding: 0px;
+        font-size: 18px;            
+}
