@@ -1,11 +1,9 @@
-console.log("ok")
 
 //Get sleeping time
-chrome.storage.sync.get("sleepTime", async({ sleepTime }) => {
+chrome.storage.local.get(["sleepTime", "currentPosition", "isCollupsed"], async({ sleepTime, currentPosition, isCollupsed }) => {
 
-              
                 //Set dragable elemt showing on the stotgae true
-                await chrome.storage.sync.set({drag_elem_showing: "showing"});
+                await chrome.storage.local.set({drag_elem_showing: "showing"});
 
                 //get array by replaing : -> ""
                 const timeArray  = sleepTime.split(":");
@@ -23,6 +21,17 @@ chrome.storage.sync.get("sleepTime", async({ sleepTime }) => {
                 dragable_main_container.className = "ext__dragable_main_container";
                 dragable_main_container.setAttribute("id", "ext__dragable_main_container");
                 
+                if(currentPosition !== undefined){
+
+                        dragable_main_container.style.top =  currentPosition.top + "px";
+                        dragable_main_container.style.left = currentPosition.left + "px";
+                        dragable_main_container.style.bottom = currentPosition.bottom + "px";
+                        dragable_main_container.style.right = currentPosition.right + "px";
+
+                }else{
+                        dragable_main_container.style.right = "10px";
+                        dragable_main_container.style.bottom = "10px";
+                }
 
                 const timerArea = document.createElement('h1');
                 timerArea.setAttribute("id", "ext_timer_area_seconds");
@@ -32,6 +41,35 @@ chrome.storage.sync.get("sleepTime", async({ sleepTime }) => {
                 const iconImage = document.createElement('img');
                 iconImage.setAttribute("src", "https://maranasati.s3.amazonaws.com/yama.gif");
                 iconImage.className = "icon_image";
+                iconImage.setAttribute("id", "image_toggle_button");
+
+                if(isCollupsed !== undefined && isCollupsed) {
+
+                        timerArea.className = "d_none";
+                        dragable_main_container.style.backgroundColor = "transparent";
+
+                }
+
+
+                iconImage.addEventListener('click', e => {
+
+                            if(timerArea.classList.contains("d_none")){
+
+                                timerArea.classList.remove("d_none");
+                                timerArea.classList.add("timer_area");
+                                dragable_main_container.style.backgroundColor = "rgb(219, 216, 216)";
+
+                                chrome.storage.local.set({isCollupsed: false});
+
+                            }else{
+
+                                timerArea.className = "d_none";
+                                dragable_main_container.style.backgroundColor = "transparent";
+                                chrome.storage.local.set({isCollupsed: true});
+
+                            }
+
+                })
 
                 dragable_main_container.appendChild(iconImage);
                 dragable_main_container.appendChild(timerArea);
@@ -43,52 +81,61 @@ chrome.storage.sync.get("sleepTime", async({ sleepTime }) => {
                 dragElement(document.getElementById("ext__dragable_main_container"));
 
                 function dragElement(elmnt) {
-                var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+                    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
-                /* otherwise, move the DIV from anywhere inside the DIV:*/
-                elmnt.onmousedown = dragMouseDown;
+                    /* otherwise, move the DIV from anywhere inside the DIV:*/
+                    elmnt.onmousedown = dragMouseDown;
+
+                    function dragMouseDown(e) {
+                        e = e || window.event;
+                        e.preventDefault();
 
 
-                function dragMouseDown(e) {
-                    e = e || window.event;
-                    e.preventDefault();
-                    // get the mouse cursor position at startup:
-                    pos3 = e.clientX;
-                    pos4 = e.clientY;
-                    document.onmouseup = closeDragElement;
-                    // call a function whenever the cursor moves:
-                    document.onmousemove = elementDrag;
-                }
+                        // get the mouse cursor position at startup:
+                        pos3 = e.clientX;
+                        pos4 = e.clientY;
+                        document.onmouseup = closeDragElement;
+                        // call a function whenever the cursor moves:
+                        document.onmousemove = elementDrag;
+                    }
 
-                function elementDrag(e) {
-                    e = e || window.event;
-                    e.preventDefault();
-                    // calculate the new cursor position:
-                    pos1 = pos3 - e.clientX;
-                    pos2 = pos4 - e.clientY;
-                    pos3 = e.clientX;
-                    pos4 = e.clientY;
-                    // set the element's new position:
-                    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-                    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-                }
 
-                function closeDragElement() {
-                    /* stop moving when mouse button is released:*/
-                    document.onmouseup = null;
-                    document.onmousemove = null;
-                }
+                    function elementDrag(e) {
+                        e = e || window.event;
+                        e.preventDefault();
+                        // calculate the new cursor position:
+                        pos1 = pos3 - e.clientX;
+                        pos2 = pos4 - e.clientY;
+                        pos3 = e.clientX;
+                        pos4 = e.clientY;
+                        // set the element's new position:
+                        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+                    }
+
+                    async function closeDragElement() {
+                        /* stop moving when mouse button is released:*/
+                        document.onmouseup = null;
+                        document.onmousemove = null;
+
+                        const currentPositionFromDrag = elmnt.getBoundingClientRect();
+
+                        await chrome.storage.local.set({currentPosition: {bottom: currentPositionFromDrag.bottom, left: currentPositionFromDrag.left, right: currentPositionFromDrag.right, top:currentPositionFromDrag.top }});
+                        
+                    }
+
                 }
 
 });
 
 //Set the left secounds in the dragable element secound left section
-setInterval(async function() {
      
       //Get time from chrome storage
-      await chrome.storage.sync.get("sleepTime", ({ sleepTime }) => {
+       chrome.storage.local.get("sleepTime", ({ sleepTime }) => {
 
-                //get current dragable element from the loaded page
+            setInterval(function() {
+
+            //get current dragable element from the loaded page
             const dragable_elm_secoundLeftDom = document.getElementById('ext_timer_area_seconds');
 
             //get array by replaing : -> ""
@@ -102,8 +149,10 @@ setInterval(async function() {
             const calculatedSleepTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, secound);
             const seconds = Math.round((calculatedSleepTime.getTime() - now.getTime()) / 1000);
             dragable_elm_secoundLeftDom.innerHTML = seconds;
+
+            }, 1000) 
     });
 
-}, 1000) 
+
 
 

@@ -9,8 +9,8 @@
     border-radius: 3px;
     text-align: center;
     position: fixed;
-    bottom: 10px;
-    right: 10px;
+    /* bottom: 10px;
+    right: 10px; */
     z-index: 100000000;
     cursor: all-scroll;
 }
@@ -24,4 +24,8 @@
     height: 50px;
     width: 51px;
     margin-right: 13px;
+}
+
+.d_none {
+    display: none;
 }
