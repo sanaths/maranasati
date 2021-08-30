@@ -45,10 +45,10 @@ function setLeftSecoundWhenPopuploadedFirst(){
 }
 
 //Set the left secounds in the popup.html white secound left section
-setInterval(function() {
+setInterval(async function() {
      
       //Get time from chrome storage
-      chrome.storage.sync.get("sleepTime", ({ sleepTime }) => {
+      await chrome.storage.sync.get("sleepTime", ({ sleepTime }) => {
       
       if(sleepTime !== undefined){
 

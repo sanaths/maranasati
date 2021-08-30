@@ -1,8 +1,8 @@
 .ext__dragable_main_container{
-    width: 250px;
+    width: 150px;
     height: 80px;
     max-height: 80px;
-    background-color: teal;
+    background-color: rgb(219, 216, 216);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,10 +11,17 @@
     position: fixed;
     bottom: 10px;
     right: 10px;
+    z-index: 100000000;
+    cursor: all-scroll;
 }
 
 .timer_area{
-        color: aliceblue;
+        color: #231e1e;
         padding: 0px;
-        font-size: 18px;            
+        font-size: 20px;            
+}
+.icon_image{
+    height: 50px;
+    width: 51px;
+    margin-right: 13px;
 }
