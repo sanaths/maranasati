@@ -51,25 +51,59 @@ chrome.storage.local.get(["sleepTime", "currentPosition", "isCollupsed"], async(
                 }
 
 
-                iconImage.addEventListener('click', e => {
+                // iconImage.addEventListener('click', e => {
 
-                            if(timerArea.classList.contains("d_none")){
+                //             if(timerArea.classList.contains("d_none")){
 
-                                timerArea.classList.remove("d_none");
-                                timerArea.classList.add("timer_area");
-                                dragable_main_container.style.backgroundColor = "rgb(219, 216, 216)";
+                //                 timerArea.classList.remove("d_none");
+                //                 timerArea.classList.add("timer_area");
+                //                 dragable_main_container.style.backgroundColor = "rgb(219, 216, 216)";
 
-                                chrome.storage.local.set({isCollupsed: false});
+                //                 chrome.storage.local.set({isCollupsed: false});
 
-                            }else{
+                //             }else{
 
-                                timerArea.className = "d_none";
-                                dragable_main_container.style.backgroundColor = "transparent";
-                                chrome.storage.local.set({isCollupsed: true});
+                //                 timerArea.className = "d_none";
+                //                 dragable_main_container.style.backgroundColor = "transparent";
+                //                 chrome.storage.local.set({isCollupsed: true});
 
-                            }
+                //             }
 
-                })
+                // })
+
+                		let dragImg = false;
+                        iconImage.addEventListener(
+                            'mousedown', () => dragImg = false);
+                    
+                        iconImage.addEventListener(
+                            'mousemove', () => dragImg = true);
+                    
+                        iconImage.addEventListener(
+                            'mouseup', () => {
+
+                                if(dragImg){
+                                    // NO ACTION SHOULD BE TAKEN AS IT IS DRAGGING NOW
+                                }else{
+
+                                    if(timerArea.classList.contains("d_none")){
+
+                                        timerArea.classList.remove("d_none");
+                                        timerArea.classList.add("timer_area");
+                                        dragable_main_container.style.backgroundColor = "rgb(219, 216, 216)";
+
+                                        chrome.storage.local.set({isCollupsed: false});
+
+                                    }else{
+
+                                        timerArea.className = "d_none";
+                                        dragable_main_container.style.backgroundColor = "transparent";
+                                        chrome.storage.local.set({isCollupsed: true});
+
+                                    }
+
+                                }
+
+                            });
 
                 dragable_main_container.appendChild(iconImage);
                 dragable_main_container.appendChild(timerArea);
@@ -78,7 +112,10 @@ chrome.storage.local.get(["sleepTime", "currentPosition", "isCollupsed"], async(
 
                 document.querySelector('body').appendChild(dragable_main_container);
 
+                const dragElem = document.getElementById("ext__dragable_main_container");
+
                 dragElement(document.getElementById("ext__dragable_main_container"));
+
 
                 function dragElement(elmnt) {
                     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -124,8 +161,12 @@ chrome.storage.local.get(["sleepTime", "currentPosition", "isCollupsed"], async(
                         
                     }
 
+
+
+
                 }
 
+                    
 });
 
 //Set the left secounds in the dragable element secound left section
