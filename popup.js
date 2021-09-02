@@ -3,16 +3,31 @@ const timeInputDom = document.getElementById("ext_time_input");
 const setTimeButtonDom = document.getElementById("ext_set_time");
 const secoundLeftDom = document.getElementById("ext__secound_left");
 
+const setDragAbleStatuBtn = document.getElementById("ext__drag_elem_controll");
+
+
 //set into storage when someone will edit this time input field
 timeInputDom.addEventListener('change', async e => {
         chrome.storage.local.set({ sleepTime: e.target.value });        
 })
 
 //everytime get set sleeping time from storage and set in the dom field at the popup.html
-chrome.storage.local.get("sleepTime", ({ sleepTime }) => {
+chrome.storage.local.get(["sleepTime", "drag_elem_showing" ], ({ sleepTime , drag_elem_showing}) => {
 
     if(sleepTime !== undefined){
         timeInputDom.value = sleepTime;
+    }
+    if(drag_elem_showing !== undefined){
+
+        if(drag_elem_showing === "showing"){
+
+            setDragAbleStatuBtn.checked = false;
+        }else{
+
+            setDragAbleStatuBtn.checked = true;
+        }
+
+        
     }
     
 });
@@ -43,6 +58,16 @@ function setLeftSecoundWhenPopuploadedFirst(){
     });
 
 }
+
+setDragAbleStatuBtn.addEventListener("change", async e => {
+    if(e.target.checked){
+                //Set dragable elemt showing on the stotgae false
+                await chrome.storage.local.set({drag_elem_showing: "stop_showing"});
+    }else{
+                //Set dragable elemt showing on the stotgae true
+                await chrome.storage.local.set({drag_elem_showing: "showing"});
+    }
+})
 
 //Set the left secounds in the popup.html white secound left section
 

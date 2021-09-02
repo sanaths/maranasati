@@ -88,6 +88,30 @@
             display: none;
         }
 
+        .ext__form_group_checkbox{
+            width: 290px;
+            outline: none;
+            margin-top: 5px;
+            color: #4b6cb7;
+            font-size: 16px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            color: aliceblue;
+            justify-content: flex-start;
+
+        }
+
+        .ext__form_control_checkbox{
+
+            outline: none;
+            color: #4b6cb7;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+
+        }
+
   </style>
   <body class="ext__popup_container">
 
@@ -115,6 +139,10 @@
     </div>
 
     <p class="ext__timer_left_label">Seconds left</p>
+
+    <div class="ext__form_group_checkbox">
+        <input type="checkbox" id="ext__drag_elem_controll" class="ext__form_control_checkbox" required> <span>Remove timer from web pages.</span>
+    </div>
 
     <script src="./popup.js"></script>
   </body>

@@ -2,8 +2,6 @@
 //Get sleeping time
 chrome.storage.local.get(["sleepTime", "currentPosition", "isCollupsed"], async({ sleepTime, currentPosition, isCollupsed }) => {
 
-                //Set dragable elemt showing on the stotgae true
-                await chrome.storage.local.set({drag_elem_showing: "showing"});
 
                 //get array by replaing : -> ""
                 const timeArray  = sleepTime.split(":");
@@ -50,26 +48,6 @@ chrome.storage.local.get(["sleepTime", "currentPosition", "isCollupsed"], async(
 
                 }
 
-
-                // iconImage.addEventListener('click', e => {
-
-                //             if(timerArea.classList.contains("d_none")){
-
-                //                 timerArea.classList.remove("d_none");
-                //                 timerArea.classList.add("timer_area");
-                //                 dragable_main_container.style.backgroundColor = "rgb(219, 216, 216)";
-
-                //                 chrome.storage.local.set({isCollupsed: false});
-
-                //             }else{
-
-                //                 timerArea.className = "d_none";
-                //                 dragable_main_container.style.backgroundColor = "transparent";
-                //                 chrome.storage.local.set({isCollupsed: true});
-
-                //             }
-
-                // })
 
                 		let dragImg = false;
                         iconImage.addEventListener(
