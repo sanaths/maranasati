@@ -29,3 +29,24 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
        })
 })
+
+//Append the dragable timer element when a new tab opened and page load/url loaded
+chrome.tabs.onActivated.addListener(async activeInfo => {
+
+
+    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+        if(tab.status === "complete" && /^http/.test(tab.url)){
+        
+                chrome.scripting.insertCSS({
+                    target: { tabId: tab.id },
+                    files: ['dragableElem.css'],
+                });
+
+                chrome.scripting.executeScript({
+                    target: { tabId: tab.id },
+                    files: ['dragableElem.js'],
+                });   
+                    
+        }
+})

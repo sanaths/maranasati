@@ -61,11 +61,40 @@ function setLeftSecoundWhenPopuploadedFirst(){
 
 setDragAbleStatuBtn.addEventListener("change", async e => {
     if(e.target.checked){
-                //Set dragable elemt showing on the stotgae false
-                await chrome.storage.local.set({drag_elem_showing: "stop_showing"});
+
+                    //Set dragable elemt showing on the stotgae false
+                    await chrome.storage.local.set({drag_elem_showing: "stop_showing"});
+
+                    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+                    if(!tab.url.includes('chrome') ){
+                            chrome.scripting.insertCSS({
+                                target: { tabId: tab.id },
+                                files: ['dragableElem.css'],
+                            });
+
+                            chrome.scripting.executeScript({
+                                target: { tabId: tab.id },
+                                files: ['dragableElem.js'],
+                            });
+                    }
     }else{
-                //Set dragable elemt showing on the stotgae true
-                await chrome.storage.local.set({drag_elem_showing: "showing"});
+                    //Set dragable elemt showing on the stotgae true
+                    await chrome.storage.local.set({drag_elem_showing: "showing"});
+
+                    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+                    if(!tab.url.includes('chrome') ){
+                            chrome.scripting.insertCSS({
+                                target: { tabId: tab.id },
+                                files: ['dragableElem.css'],
+                            });
+
+                            chrome.scripting.executeScript({
+                                target: { tabId: tab.id },
+                                files: ['dragableElem.js'],
+                            });
+                    }
     }
 })
 
@@ -99,6 +128,11 @@ setDragAbleStatuBtn.addEventListener("change", async e => {
 
 //Create the page dome element where left secounds will show up -> Function calling
 setTimeButtonDom.addEventListener("click", async () => {
+
+    //set the dragelemnt current status showing
+    await chrome.storage.local.set({drag_elem_showing: "showing"});
+    setDragAbleStatuBtn.checked = false
+
     let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
     if(!tab.url.includes('chrome') ){

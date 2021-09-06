@@ -1,7 +1,12 @@
 
 //Get sleeping time
-chrome.storage.local.get(["sleepTime", "currentPosition", "isCollupsed"], async({ sleepTime, currentPosition, isCollupsed }) => {
+chrome.storage.local.get(["sleepTime", "currentPosition", "isCollupsed", "drag_elem_showing"], async({ sleepTime, currentPosition, isCollupsed, drag_elem_showing }) => {
 
+        //check if the current status is hidden or not
+
+            console.log("Fired", drag_elem_showing)
+
+            if(drag_elem_showing !== undefined && drag_elem_showing === "showing"){
 
                 //get array by replaing : -> ""
                 const timeArray  = sleepTime.split(":");
@@ -138,12 +143,16 @@ chrome.storage.local.get(["sleepTime", "currentPosition", "isCollupsed"], async(
                         await chrome.storage.local.set({currentPosition: {bottom: currentPositionFromDrag.bottom, left: currentPositionFromDrag.left, right: currentPositionFromDrag.right, top:currentPositionFromDrag.top }});
                         
                     }
-
-
-
-
                 }
 
+        }else{
+
+            const dragElem = document.getElementById("ext__dragable_main_container");
+
+            if(dragElem !== null){
+                dragElem.remove();
+            }
+        }
                     
 });
 
@@ -157,17 +166,21 @@ chrome.storage.local.get(["sleepTime", "currentPosition", "isCollupsed"], async(
             //get current dragable element from the loaded page
             const dragable_elm_secoundLeftDom = document.getElementById('ext_timer_area_seconds');
 
-            //get array by replaing : -> ""
-            const timeArray  = sleepTime.split(":");
-            //set sleeping hour, minute , secounds
-            const hour = typeof timeArray[0] === "string" ? timeArray[0] : "00";
-            const minute = typeof timeArray[1] === "string" ? timeArray[1] : "00";
-            const secound = typeof timeArray[2] === "string" ? timeArray[2] : "00";
+            if(dragable_elm_secoundLeftDom !== null){
 
-            const now   = new Date();
-            const calculatedSleepTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, secound);
-            const seconds = Math.round((calculatedSleepTime.getTime() - now.getTime()) / 1000);
-            dragable_elm_secoundLeftDom.innerHTML = seconds;
+                    //get array by replaing : -> ""
+                    const timeArray  = sleepTime.split(":");
+                    //set sleeping hour, minute , secounds
+                    const hour = typeof timeArray[0] === "string" ? timeArray[0] : "00";
+                    const minute = typeof timeArray[1] === "string" ? timeArray[1] : "00";
+                    const secound = typeof timeArray[2] === "string" ? timeArray[2] : "00";
+
+                    const now   = new Date();
+                    const calculatedSleepTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, secound);
+                    const seconds = Math.round((calculatedSleepTime.getTime() - now.getTime()) / 1000);
+                    dragable_elm_secoundLeftDom.innerHTML = seconds;
+                
+            }
 
             }, 1000) 
     });
