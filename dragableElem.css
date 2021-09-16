@@ -2,7 +2,7 @@
     width: 150px;
     height: 80px;
     max-height: 80px;
-    background-color: rgb(219, 216, 216);
+    background: rgb(81,7,37);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,7 +16,7 @@
 }
 
 .timer_area{
-        color: #231e1e;
+        color: #fff;
         padding: 0px;
         font-size: 20px;            
 }

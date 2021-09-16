@@ -9,9 +9,8 @@
         .ext__popup_container {
             height: 500px;
             width: 300px; 
-            background: #4b6cb7;  
-            background: -webkit-linear-gradient(to right, #182848, #4b6cb7);
-            background: linear-gradient(to right, #182848, #4b6cb7); 
+            background: linear-gradient(
+            90deg, rgba(2,0,36,1) 0%, rgba(81,7,37,1) 55%);
             display: flex;
             flex-direction: column;
             padding: 20px;
@@ -102,21 +101,78 @@
 
         }
 
-        .ext__form_control_checkbox{
+        .container {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-            outline: none;
-            color: #4b6cb7;
-            width: 20px;
+        /* Hide the browser's default checkbox */
+        .container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
             height: 20px;
-            margin-right: 5px;
+            width: 20px;
+            background-color: #eee;
+        }
 
+        /* On mouse-over, add a grey background color */
+        .container:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .container input:checked ~ .checkmark {
+            background-color: #2196F3;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .container input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .container .checkmark:after {
+            left: 6px;
+            top: 3px;
+            width: 3px;
+            height: 7px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
         }
 
   </style>
   <body class="ext__popup_container">
 
     <div class="ext__logo_area">
-        <h1>DEEP SLEEP</h1>
+        <h1>Daily Death</h1>
     </div>
 
     <div class="ext__error_msg" id="ext__error_msg"></div>
@@ -141,7 +197,13 @@
     <p class="ext__timer_left_label">Seconds left</p>
 
     <div class="ext__form_group_checkbox">
-        <input type="checkbox" id="ext__drag_elem_controll" class="ext__form_control_checkbox" required> <span>Remove timer from web pages.</span>
+        <!-- <input type="checkbox" id="ext__drag_elem_controll" class="ext__form_control_checkbox" required> <span>Hide In-Browser Timer</span> -->
+
+        <label class="container">Hide In-Browser Timer
+            <input type="checkbox" checked="checked" id="ext__drag_elem_controll">
+            <span class="checkmark"></span>
+        </label>
+
     </div>
 
     <script src="./popup.js"></script>
