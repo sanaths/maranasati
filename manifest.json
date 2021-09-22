@@ -1,6 +1,6 @@
 {
     "name": "Daily Death",
-    "description": "Change me at manifest.json file please",
+    "description": "We spend so much time in our browser. Let's keep a reminder that the clock is ticking so we don't lose track of what's important.",
     "version": "1.0",
     "manifest_version": 3,
     "background": {
