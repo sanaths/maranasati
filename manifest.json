@@ -1,6 +1,6 @@
 {
     "name": "Daily Death",
-    "description": "We spend so much time in our browser. Let's keep a reminder that the clock is ticking so we don't lose track of what's important.",
+    "description": "Add a tiny god of death to your browser window to remind you that the clock is ticking.",
     "version": "1.0",
     "manifest_version": 3,
     "background": {
