@@ -1,7 +1,7 @@
 {
     "name": "Daily Death",
     "description": "Add a tiny god of death to your browser window to remind you that the clock is ticking.",
-    "version": "1.0",
+    "version": "0.0.0.1",
     "manifest_version": 3,
     "background": {
         "service_worker": "background.js"
