@@ -1,9 +1,7 @@
 console.log("background running");
 
 chrome.runtime.onInstalled.addListener(function (details) {
-  console.log("Installex");
-
-  chrome.storage.local.set({ sleepTime: undefined });
+  chrome.storage.local.set({ sleepTime: undefined, isCollupsed: true });
 });
 
 //Append the dragable timer element when a new tab opened and page load/url loaded
